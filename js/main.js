@@ -21,6 +21,7 @@ const theCanvas = document.querySelector('canvas'),
       //grab the reset button
       resetScreen = document.querySelector('.level-up');
 
+
 var playState = true,
     score = 0,
     mousePos = 0,
@@ -59,13 +60,13 @@ function draw() {
     ctx.drawImage(playerImg, player.x, player.y, player.width, player.height);
 
     bullets.forEach((bullet, index) => {
-      ctx.fillStyle = 'rgb(255, 0, 0)';
+      ctx.fillStyle = 'rgb(0, 255, 0)';
       ctx.fillRect(bullet.x, bullet.y, bullet.x2, bullet.y2);
 
       let bulletIndex = index;
 
       squares.forEach((square, index) => {
-        //check for collision (bullt and box)
+        //check for collision (bullet and box)
         if (bullet.y <= (square.y + square.y2) && bullet.y > square.y && bullet.x > square.x && bullet.x < (square.x + square.x2)) {
           squares.splice(index, 1);
           bullets.splice(bulletIndex, 1);
@@ -80,7 +81,7 @@ function draw() {
             showResetScreen();
           }
 
-          //play explosion souind]
+          //play explosion sound]
           let explode = document.createElement('audio');
           explode.src = "audio/explosion.mp3";
 
@@ -227,6 +228,14 @@ function randomX() {
 }
 
 window.requestAnimationFrame(draw);
+
+function enemy1LeaveScreen() {
+  playerLives--;
+  if(playerLives) {
+    playerImg.setImg('Lives: '+lives);
+  }
+}
+
 
 //window.addEventListener('keydown', moveShip);
 theCanvas.addEventListener('mousemove', movePlayer);
